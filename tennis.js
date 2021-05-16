@@ -1,4 +1,5 @@
 import { defs, tiny } from "./examples/common.js";
+import { Ball } from "./ball.js";
 
 const { Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4, Light, Shape, Material, Scene } =
     tiny;
@@ -12,6 +13,9 @@ export class Tennis extends Scene {
         this.shapes = {
             sphere: new defs.Subdivision_Sphere(4),
         };
+
+        this.ball = new Ball();
+        this.ball.log();
 
         // *** Materials
         this.materials = {
@@ -49,8 +53,10 @@ export class Tennis extends Scene {
 
         // Lighting
         const light_position = vec4(5, 0, 0, 1);
-        program_state.lights = [new Light(light_position, color(1, 1, 1, 1), 10)];
+        program_state.lights = [new Light(light_position, color(1, 1, 1, 1), 100)];
 
         this.shapes.sphere.draw(context, program_state, model_transform, this.materials.sphere);
+
+        this.ball.draw(context, program_state, model_transform);
     }
 }
