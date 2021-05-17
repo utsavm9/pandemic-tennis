@@ -1,4 +1,5 @@
 import { defs, tiny } from "./examples/common.js";
+import { Paddle } from "./paddle.js";
 
 const { Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4, Light, Shape, Material, Scene } =
     tiny;
@@ -12,6 +13,8 @@ export class Tennis extends Scene {
         this.shapes = {
             sphere: new defs.Subdivision_Sphere(4),
         };
+
+        this.paddle = new Paddle();
 
         // *** Materials
         this.materials = {
@@ -47,10 +50,12 @@ export class Tennis extends Scene {
         // Transform matrix
         let model_transform = Mat4.identity();
 
+        let stick_transform = Mat4.identity();
+
         // Lighting
         const light_position = vec4(5, 0, 0, 1);
         program_state.lights = [new Light(light_position, color(1, 1, 1, 1), 10)];
 
-        this.shapes.sphere.draw(context, program_state, model_transform, this.materials.sphere);
+        this.paddle.draw(context, program_state, model_transform);
     }
 }
