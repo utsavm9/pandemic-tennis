@@ -12,7 +12,7 @@ function assert(condition, message) {
 export class Paddle extends Scene {
     constructor() {
         super();
-
+        this.PADDLE_WIDTH = 0.5;
         this.cylinder = new defs.Capped_Cylinder(20, 20);
         this.materials = 
         {   
@@ -46,14 +46,30 @@ export class Paddle extends Scene {
             z: 0,
         };
 
+        this.bounds = {
+            LEFT: -this.PADDLE_WIDTH,
+            RIGHT: this.PADDLE_WIDTH,
+            UP: this.PADDLE_WIDTH,
+            DOWN: -this.PADDLE_WIDTH,
+            FRONT: this.z,
+        }
+
+
         this.t = undefined;
         this.dt = 0;
     }
 
     move(x, y, z) {
-        this.position.x += x;
-        this.position.y += y;
-        this.position.z += z;
+        this.position.x = x;
+        this.position.y = y;
+        this.position.z = z;
+        this.bounds.LEFT = x - this.PADDLE_WIDTH;
+        this.bounds.RIGHT = x + this.PADDLE_WIDTH;
+        this.bounds.UP = y + this.PADDLE_WIDTH;
+        this.bounds.DOWN = y - this.PADDLE_WIDTH;
+        this.bounds.FRONT = z;  // Shouldn't change unless we want the paddle
+                                // to move in the z direction. But, nice to have in 
+                                // case we do.
     }
 
     log() {
@@ -68,11 +84,17 @@ export class Paddle extends Scene {
             this.t = t;
         }
 
-        this.dt = t - this.t;
-        assert(this.dt >= 0, { m: "ball: dt has become negative" });
+        // Disregarding model_transform for mouse control (setting to Identity matrix)
+        // Why? mapping to the mouse allows for a better experience when playing.
+        // If we only move our paddle based on relative positioning, we run into an awkward
+        // mouse dragging experience. 
 
-        //this.move(this.dt);
-        
+        //TODO: get this working for a rotated scene. 
+        // - Idea:
+        //     - apply the rotation matrix for rotating the scene
+        //       to the model_transform for the paddle
+
+        model_transform = Mat4.identity();
         let paddle_transform = model_transform.times(Mat4.translation(this.position.x, this.position.y, this.position.z))
                                         .times(Mat4.scale(1, 1, 0.3));
         this.cylinder.draw(context, program_state, paddle_transform, this.materials.paddle_top);
@@ -80,7 +102,6 @@ export class Paddle extends Scene {
                             .times(Mat4.translation(0, 0, 1))
                             .times(Mat4.scale(0.2, 0.3, 1.5));
         this.cylinder.draw(context, program_state, stick_transform, this.materials.paddle_stick);
-        //model_transform = model_transform.times(Mat4.translation(-this.position.x, -this.position.y, -this.position.z));
 
         this.log();
         this.t = t;
