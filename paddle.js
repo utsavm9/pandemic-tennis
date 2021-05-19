@@ -51,7 +51,10 @@ export class Paddle extends Scene {
             RIGHT: this.PADDLE_WIDTH,
             UP: this.PADDLE_WIDTH,
             DOWN: -this.PADDLE_WIDTH,
+<<<<<<< HEAD
             FRONT: this.z,
+=======
+>>>>>>> 402288850b9c83e947abdc92d4b4bb02d8b92e7f
         }
 
 
@@ -67,9 +70,12 @@ export class Paddle extends Scene {
         this.bounds.RIGHT = x + this.PADDLE_WIDTH;
         this.bounds.UP = y + this.PADDLE_WIDTH;
         this.bounds.DOWN = y - this.PADDLE_WIDTH;
+<<<<<<< HEAD
         this.bounds.FRONT = z;  // Shouldn't change unless we want the paddle
                                 // to move in the z direction. But, nice to have in 
                                 // case we do.
+=======
+>>>>>>> 402288850b9c83e947abdc92d4b4bb02d8b92e7f
     }
 
     log() {
