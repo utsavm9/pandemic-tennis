@@ -31,9 +31,11 @@ export class Tennis extends Scene {
 
     make_control_panel() {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
-        this.key_triggered_button("View solar system", ["Control", "0"], () => (this.attached = () => "init"));
-        this.new_line();
-        this.key_triggered_button("Attach to planet 1", ["Control", "1"], () => (this.attached = () => this.planet_1));
+        this.key_triggered_button("Up", ["w"], () => (this.paddle.move(0,0.5,0)));
+        //this.new_line();
+        this.key_triggered_button("Left", ["a"], () => (this.paddle.move(-0.5, 0, 0)));
+        this.key_triggered_button("Down", ["s"], () => (this.paddle.move(0,-0.5,0)));
+        this.key_triggered_button("Right", ["d"], () => (this.paddle.move(0.5, 0, 0)));
     }
 
     display(context, program_state) {

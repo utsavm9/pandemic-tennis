@@ -50,15 +50,14 @@ export class Paddle extends Scene {
         this.dt = 0;
     }
 
-    move(dt) {
-        // Δd = vΔt
-        this.position.x += this.velocity.x * dt;
-        this.position.y += this.velocity.y * dt;
-        this.position.z += this.velocity.z * dt;
+    move(x, y, z) {
+        this.position.x += x;
+        this.position.y += y;
+        this.position.z += z;
     }
 
     log() {
-        console.log("a ball is here");
+        console.log(this.position.x);
     }
 
     draw(context, program_state, model_transform) {
@@ -73,7 +72,7 @@ export class Paddle extends Scene {
         assert(this.dt >= 0, { m: "ball: dt has become negative" });
 
         //this.move(this.dt);
-
+        
         let paddle_transform = model_transform.times(Mat4.translation(this.position.x, this.position.y, this.position.z))
                                         .times(Mat4.scale(1, 1, 0.3));
         this.cylinder.draw(context, program_state, paddle_transform, this.materials.paddle_top);
@@ -83,7 +82,7 @@ export class Paddle extends Scene {
         this.cylinder.draw(context, program_state, stick_transform, this.materials.paddle_stick);
         //model_transform = model_transform.times(Mat4.translation(-this.position.x, -this.position.y, -this.position.z));
 
-
+        this.log();
         this.t = t;
     }
 }
