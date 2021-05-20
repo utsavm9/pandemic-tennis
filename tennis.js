@@ -1,5 +1,7 @@
 import { defs, tiny } from "./examples/common.js";
+import { Background } from "./background.js";
 import { Paddle } from "./paddle.js";
+
 
 const { Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4, Light, Shape, Material, Scene } =
     tiny;
@@ -9,13 +11,14 @@ export class Tennis extends Scene {
         // constructor(): Scenes begin by populating initial values like the Shapes and Materials they'll need.
         super();
 
+        this.background= new Background();
+        
         // At the beginning of our program, load one of each of these shape definitions onto the GPU.
         this.shapes = {
             sphere: new defs.Subdivision_Sphere(4),
         };
 
         this.paddle = new Paddle();
-
         // *** Materials
         this.materials = {
             sphere: new Material(new defs.Phong_Shader(), {
@@ -61,6 +64,7 @@ export class Tennis extends Scene {
         const light_position = vec4(5, 0, 0, 1);
         program_state.lights = [new Light(light_position, color(1, 1, 1, 1), 10)];
 
+        this.background.displays(context,program_state);
         this.paddle.draw(context, program_state, model_transform);
     }
 }
