@@ -19,7 +19,9 @@ export class Background extends Scene {
             cylinder:new defs.Capped_Cylinder(1, 10, [[0, 2], [0, 1]]),
         };
         //this.shapes.box_2.arrays.texture_coord.forEach(p => p.scale_by(2));
+                
 
+            
         this.scratchpad = document.createElement('canvas');
         // A hidden canvas for re-sizing the real canvas to be square:
         this.scratchpad_context = this.scratchpad.getContext('2d');
@@ -56,33 +58,7 @@ export class Background extends Scene {
         
 
     }
-    /*
-        make_trees(context, program_state, branch)
-        {
-            let i=0;
-            let t_y=1.5;
-            let s_x=1.5;
-            while(i<branch)
-            {
-                 let tree_transform=Mat4.identity();
-                 tree_transform=tree_transform.times(Mat4.rotation(90,-1,0,0));
-                 this.shapes.cone.draw(context,program_state,tree_transform,this.materials.Cone);
-                 tree_transform=tree_transform
-                    .times(Mat4.translation(0,-t_y,0));
-                    //.times(Mat4.scale(s_x,1,1));
-                  t_y=t_y+1.5;
-                  s_x=s_x+0.5;
-                  i=i+1;
-            }
-            let trunk=Mat4.identity();
-            trunk=trunk.times(Mat4.translation(0,-t_y,0))
-                       .times(Mat4.rotation(90,-1,0,0))
-                       .times(Mat4.scale(0.4,0.4,2));
-            this.shapes.cylinder.draw(context,program_state,trunk,this.materials.trunk);
-        
-       
-        }
-    */
+    
 
     make_trees(context, program_state, branch,x_pos,y_pos,z_pos)
         {
@@ -124,7 +100,7 @@ export class Background extends Scene {
    
 
 
-    display(context, program_state) {
+    displays(context, program_state) {
         // display():  Called once per frame of animation.
         // Setup -- This part sets up the scene's overall camera matrix, projection matrix, and lights:
         if (!context.scratchpad.controls) {
