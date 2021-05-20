@@ -1,4 +1,5 @@
 import { defs, tiny } from "./examples/common.js";
+import { Paddle } from "./paddle.js";
 
 const { Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4, Light, Shape, Material, Scene } =
     tiny;
@@ -12,6 +13,8 @@ export class Tennis extends Scene {
         this.shapes = {
             sphere: new defs.Subdivision_Sphere(4),
         };
+
+        this.paddle = new Paddle();
 
         // *** Materials
         this.materials = {
@@ -28,16 +31,21 @@ export class Tennis extends Scene {
 
     make_control_panel() {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
-        this.key_triggered_button("View solar system", ["Control", "0"], () => (this.attached = () => "init"));
-        this.new_line();
-        this.key_triggered_button("Attach to planet 1", ["Control", "1"], () => (this.attached = () => this.planet_1));
+        this.key_triggered_button("Up", ["w"], () => (this.paddle.move(0,0.5,0)));
+        //this.new_line();
+        this.key_triggered_button("Left", ["a"], () => (this.paddle.move(-0.5, 0, 0)));
+        this.key_triggered_button("Down", ["s"], () => (this.paddle.move(0,-0.5,0)));
+        this.key_triggered_button("Right", ["d"], () => (this.paddle.move(0.5, 0, 0)));
     }
 
     display(context, program_state) {
         // display():  Called once per frame of animation.
         // Setup -- This part sets up the scene's overall camera matrix, projection matrix, and lights:
         if (!context.scratchpad.controls) {
-            this.children.push((context.scratchpad.controls = new defs.Movement_Controls()));
+            let movement_controls = new defs.Movement_Controls();
+            movement_controls.add_mouse_controls(context.canvas, this.paddle);
+            movement_controls.mouse_enabled_canvases.add(context.canvas);
+            this.children.push((context.scratchpad.controls = movement_controls));
             // Define the global camera and projection matrices, which are stored in program_state.
             program_state.set_camera(this.initial_camera_location);
         }
@@ -47,10 +55,12 @@ export class Tennis extends Scene {
         // Transform matrix
         let model_transform = Mat4.identity();
 
+        let stick_transform = Mat4.identity();
+
         // Lighting
         const light_position = vec4(5, 0, 0, 1);
         program_state.lights = [new Light(light_position, color(1, 1, 1, 1), 10)];
 
-        this.shapes.sphere.draw(context, program_state, model_transform, this.materials.sphere);
+        this.paddle.draw(context, program_state, model_transform);
     }
 }

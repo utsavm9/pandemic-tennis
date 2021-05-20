@@ -823,6 +823,7 @@ const Movement_Controls = defs.Movement_Controls =
 
             this.mouse_enabled_canvases = new Set();
             this.will_take_over_graphics_state = true;
+            this.is_moving = false;
         }
 
         set_recipient(matrix_closure, inverse_closure) {
@@ -840,27 +841,37 @@ const Movement_Controls = defs.Movement_Controls =
                 () => graphics_state.camera_inverse);
         }
 
-        add_mouse_controls(canvas) {
+        add_mouse_controls(canvas, paddle) {
             // add_mouse_controls():  Attach HTML mouse events to the drawing canvas.
             // First, measure mouse steering, for rotating the flyaround camera:
             this.mouse = {"from_center": vec(0, 0)};
             const mouse_position = (e, rect = canvas.getBoundingClientRect()) =>
                 vec(e.clientX - (rect.left + rect.right) / 2, e.clientY - (rect.bottom + rect.top) / 2);
             // Set up mouse response.  The last one stops us from reacting if the mouse leaves the canvas:
-            document.addEventListener("mouseup", e => {
-                this.mouse.anchor = undefined;
-            });
+            // document.addEventListener("mouseup", e => {
+            //     this.is_moving = false;
+            //     this.mouse.anchor = undefined;
+            // });
             canvas.addEventListener("mousedown", e => {
                 e.preventDefault();
+                this.is_moving = !this.is_moving;
                 this.mouse.anchor = mouse_position(e);
             });
             canvas.addEventListener("mousemove", e => {
-                e.preventDefault();
-                this.mouse.from_center = mouse_position(e);
+                // TODO: I added a click toggle, but because the paddle will map to the mouse anyways, it doesn't make 
+                // much sense to keep it. Discuss with team.
+                //if (this.is_moving) {
+                    e.preventDefault();
+                    this.mouse.from_center = mouse_position(e);
+                    console.log("m from c: " + String(this.mouse.from_center));
+                    console.log("x: " + String(this.mouse.from_center.x));
+                    console.log("y: " + String(this.mouse.from_center.y));
+                    paddle.move(0.05*this.mouse.from_center[0], -0.05*this.mouse.from_center[1], 0);
+                //}
             });
-            canvas.addEventListener("mouseout", e => {
-                if (!this.mouse.anchor) this.mouse.from_center.scale_by(0)
-            });
+            //canvas.addEventListener("mouseout", e => {
+              //  if (!this.mouse.anchor) this.mouse.from_center.scale_by(0)
+            //});
         }
 
         show_explanation(document_element) {
@@ -879,12 +890,12 @@ const Movement_Controls = defs.Movement_Controls =
             this.new_line();
             this.new_line();
 
-            this.key_triggered_button("Up", [" "], () => this.thrust[1] = -1, undefined, () => this.thrust[1] = 0);
-            this.key_triggered_button("Forward", ["w"], () => this.thrust[2] = 1, undefined, () => this.thrust[2] = 0);
+            //this.key_triggered_button("Up", [" "], () => this.thrust[1] = -1, undefined, () => this.thrust[1] = 0);
+            //this.key_triggered_button("Forward", ["w"], () => this.thrust[2] = 1, undefined, () => this.thrust[2] = 0);
             this.new_line();
-            this.key_triggered_button("Left", ["a"], () => this.thrust[0] = 1, undefined, () => this.thrust[0] = 0);
-            this.key_triggered_button("Back", ["s"], () => this.thrust[2] = -1, undefined, () => this.thrust[2] = 0);
-            this.key_triggered_button("Right", ["d"], () => this.thrust[0] = -1, undefined, () => this.thrust[0] = 0);
+            //this.key_triggered_button("Left", ["a"], () => this.thrust[0] = 1, undefined, () => this.thrust[0] = 0);
+            //this.key_triggered_button("Back", ["s"], () => this.thrust[2] = -1, undefined, () => this.thrust[2] = 0);
+            //this.key_triggered_button("Right", ["d"], () => this.thrust[0] = -1, undefined, () => this.thrust[0] = 0);
             this.new_line();
             this.key_triggered_button("Down", ["z"], () => this.thrust[1] = 1, undefined, () => this.thrust[1] = 0);
 
@@ -989,14 +1000,14 @@ const Movement_Controls = defs.Movement_Controls =
             }
 
             if (!this.mouse_enabled_canvases.has(context.canvas)) {
-                this.add_mouse_controls(context.canvas);
-                this.mouse_enabled_canvases.add(context.canvas)
+                //this.add_mouse_controls(context.canvas);
+                //this.mouse_enabled_canvases.add(context.canvas)
             }
             // Move in first-person.  Scale the normal camera aiming speed by dt for smoothness:
             this.first_person_flyaround(dt * r, dt * m);
             // Also apply third-person "arcball" camera mode if a mouse drag is occurring:
-            if (this.mouse.anchor)
-                this.third_person_arcball(dt * r);
+            //if (this.mouse.anchor)
+                //this.third_person_arcball(dt * r);
             // Log some values:
             this.pos = this.inverse().times(vec4(0, 0, 0, 1));
             this.z_axis = this.inverse().times(vec4(0, 0, 1, 0));
