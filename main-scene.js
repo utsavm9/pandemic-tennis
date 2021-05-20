@@ -8,6 +8,7 @@ import { Surfaces_Demo } from "./examples/surfaces-demo.js";
 import { Text_Demo } from "./examples/text-demo.js";
 import { Transforms_Sandbox } from "./examples/transforms-sandbox.js";
 import { Tennis } from "./tennis.js";
+import { Background } from "./background.js";
 // Pull these names into this module's scope for convenience:
 const {
     Vector,
@@ -55,7 +56,8 @@ Object.assign(
 
 // (Can define Main_Scene's class here)
 
-const Main_Scene = Tennis;
+//const Main_Scene = Surfaces_Demo;
+const Main_Scene = Background;
 const Additional_Scenes = [];
 
 export { Main_Scene, Additional_Scenes, Canvas_Widget, Code_Widget, Text_Widget, defs };
