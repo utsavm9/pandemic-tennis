@@ -1,6 +1,7 @@
 import { defs, tiny } from "./examples/common.js";
 import { Background } from "./background.js";
 import { Paddle } from "./paddle.js";
+import { Table } from "./table.js";
 
 
 const { Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4, Light, Shape, Material, Scene } =
@@ -19,6 +20,7 @@ export class Tennis extends Scene {
         };
 
         this.paddle = new Paddle();
+        this.table = new Table();
         // *** Materials
         this.materials = {
             sphere: new Material(new defs.Phong_Shader(), {
@@ -66,5 +68,6 @@ export class Tennis extends Scene {
 
         this.background.displays(context,program_state);
         this.paddle.draw(context, program_state, model_transform);
+        this.table.draw(context, program_state, model_transform);
     }
 }
