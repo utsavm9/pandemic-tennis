@@ -47,8 +47,8 @@ export class Table extends Scene {
 
             }),
              leg: new Material(new defs.Phong_Shader(), {
-                ambient: 0.5,
-                specularity: 1,
+                ambient: 0.25,
+                specularity: 0.25,
                 color: hex_color("#e5e5e5"),
                 smoothness: 1
             }),

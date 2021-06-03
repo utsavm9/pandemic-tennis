@@ -5,6 +5,7 @@ import { defs, tiny } from "./examples/common.js";
 const { Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4, Light, Shape, Material, Texture, Scene } =
     tiny;
 var score_num=0;
+
 export class Text_Line extends Shape {                           // **Text_Line** embeds text in the 3D world, using a crude texture
         // method.  This Shape is made of a horizontal arrangement of quads.
         // Each is textured over with images of ASCII characters, spelling
@@ -93,10 +94,10 @@ export class Text_Box extends Scene {
 
       
     }
-
+    
    
 
-    display(context, program_state) {
+    display(context, program_state,setting) {
         // display():  Called once per frame of animation.
         // Setup -- This part sets up the scene's overall camera matrix, projection matrix, and lights:
       
@@ -114,14 +115,45 @@ export class Text_Box extends Scene {
 
         
         //SCORE: adapted from text-demo.js
-        //let strings = ["This is some text", "More text", "1234567890", "This is a line.\n\n\n" + "This is another line.",
-        //    "Score: ", "some more stuff"];
         let strings = ["", "", "", "",
-            "Score:"+score_num, ""];
+            "Start", ""];
+        if(setting==1)
+        {
+             strings = ["", "", "", "",
+            "Start", ""];
 
+        }
+        if(setting==2)
+        {
+             strings = ["", "", "", "",
+            "Score:"+score_num, ""];
+        }
+        if(setting==3)
+        {
+             strings = ["", "", "", "",
+            "TRY AGAIN", ""];
+        }
         let funny_orbit = Mat4.identity();//Mat4.rotation(Math.PI / 4 * t, Math.cos(t), Math.sin(t), .7 * Math.cos(t));
+        if(setting==1)
+        {
+            funny_orbit=Mat4.identity();
+            funny_orbit=funny_orbit.times(Mat4.translation(-1,0,0))
+                                .times(Mat4.rotation(-0.2,1,0,0));
+        }
+        if(setting==2)
+        {
+            funny_orbit=Mat4.identity();
         funny_orbit=funny_orbit.times(Mat4.translation(-11,6,1))
                                 .times(Mat4.rotation(-0.2,1,0,0));
+                                score_num=score_num+=1;
+        }
+        if(setting==3)
+        {
+            funny_orbit=Mat4.identity();
+            funny_orbit=funny_orbit.times(Mat4.translation(-1,0,0))
+                                .times(Mat4.rotation(-0.2,1,0,0));
+        }
+        
         this.shapes.cube.draw(context, program_state, funny_orbit, this.materials.trans);
     
         // Sample the "strings" array and draw them onto a cube.
@@ -143,5 +175,6 @@ export class Text_Box extends Scene {
                 }
             
         // basically when collision is detected increase score_num then it should update
+
     }
 }
