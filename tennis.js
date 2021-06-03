@@ -10,6 +10,7 @@ const { Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4
     tiny;
 var i = 0;
 var start = 1;
+var score_num=0;
 export class Tennis extends Scene {
     constructor() {
         // constructor(): Scenes begin by populating initial values like the Shapes and Materials they'll need.
@@ -51,7 +52,15 @@ export class Tennis extends Scene {
         //this.key_triggered_button("Down", ["s"], () => (this.paddle.move(0,-0.5,0)));
         //this.key_triggered_button("Right", ["d"], () => (this.paddle.move(0.5, 0, 0)));
     }
+     game_over(){
+        start=0;
+    }
+    increase_score()
+    {
+        score_num=score_num+1;
+    }
 
+   
     display(context, program_state) {
         // display():  Called once per frame of animation.
         // Setup -- This part sets up the scene's overall camera matrix, projection matrix, and lights:
@@ -83,14 +92,13 @@ export class Tennis extends Scene {
         if (this.swarm != 1) {
             if (start == 1) {
                 this.background.displays(context, program_state, 1);
-                this.texts.display(context, program_state, 1);
-            } else if (start == 0) {
-                this.background.displays(context, program_state, 1);
-                this.texts.display(context, program_state, 3);
-            }
+                this.texts.display(context, program_state, 1,score_num);
+            } 
         }
 
         if (this.swarm == 1) {
+            if(start ==1)
+            {
             this.background.displays(context, program_state, 2);
 
             this.paddle.draw(context, program_state, model_transform);
@@ -105,8 +113,17 @@ export class Tennis extends Scene {
             // Revert z
 
             this.table.draw(context, program_state, model_transform);
-            this.texts.display(context, program_state, 2);
-            start = 0;
+            this.texts.display(context, program_state, 2,score_num);
+            //this.increase_score();
+            }
+            else if (start ==0)
+            {
+                this.background.displays(context, program_state, 1);
+                this.texts.display(context, program_state, 3,score_num);
+
+            }
+            
         }
+       
     }
 }

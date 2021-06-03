@@ -864,12 +864,9 @@ const Movement_Controls = defs.Movement_Controls =
                     {
                         if(tennis.swarm != 1)
                         {
-                        tennis.swarm ^=1;
+                        tennis.swarm =1;
                         }
-                        else if(tennis.swarm==1)
-                        {
-                            tennis.swarm ^=1;
-                        }
+                        
                           
                     }
                     }
