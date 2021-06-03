@@ -99,20 +99,22 @@ export class Tennis extends Scene {
             
         if(this.swarm==1)
         {
-			this.background.displays(context, program_state);
+			this.background.displays(context, program_state, 2);
+
 			this.paddle.draw(context, program_state, model_transform);
 			program_state.lights = [new Light(light_position, color(1, 1, 1, 1), 100)];
 
+			
 			// Make z-upwards
 			model_transform = model_transform.times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
-
 			this.axis.insert(model_transform.copy());
 			this.axis.display(context, program_state);
-            
+			this.ball.draw(context, program_state, model_transform);
+            model_transform = model_transform.times(Mat4.rotation(Math.PI / 2, 1, 0, 0));
+			// Revert z
             
             this.table.draw(context, program_state, model_transform);
             this.texts.display(context,program_state,2);
-			this.ball.draw(context, program_state, model_transform);
             start=0;
             
 
