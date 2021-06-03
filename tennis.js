@@ -2,6 +2,7 @@ import { defs, tiny } from "./examples/common.js";
 import { Background } from "./background.js";
 import { Paddle } from "./paddle.js";
 import { Table } from "./table.js";
+import { Text_Box } from "./text_line.js";
 
 
 const { Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4, Light, Shape, Material, Scene } =
@@ -13,6 +14,7 @@ export class Tennis extends Scene {
         super();
 
         this.background= new Background();
+        this.texts=new Text_Box();
         
         // At the beginning of our program, load one of each of these shape definitions onto the GPU.
         this.shapes = {
@@ -46,6 +48,7 @@ export class Tennis extends Scene {
     display(context, program_state) {
         // display():  Called once per frame of animation.
         // Setup -- This part sets up the scene's overall camera matrix, projection matrix, and lights:
+        const t = program_state.animation_time / 1000, dt = program_state.animation_delta_time / 1000;
         if (!context.scratchpad.controls) {
             let movement_controls = new defs.Movement_Controls();
             movement_controls.add_mouse_controls(context.canvas, this.paddle);
@@ -53,6 +56,9 @@ export class Tennis extends Scene {
             this.children.push((context.scratchpad.controls = movement_controls));
             // Define the global camera and projection matrices, which are stored in program_state.
             program_state.set_camera(this.initial_camera_location);
+            let camerap=Mat4.translation(0,0,-40);
+            camerap=camerap.times(Mat4.rotation(0.1,-1,0,0));
+            //program_state.set_camera(camerap);
         }
 
         program_state.projection_transform = Mat4.perspective(Math.PI / 4, context.width / context.height, 0.1, 1000);
@@ -69,5 +75,6 @@ export class Tennis extends Scene {
         this.background.displays(context,program_state);
         this.paddle.draw(context, program_state, model_transform);
         this.table.draw(context, program_state, model_transform);
+        this.texts.display(context,program_state);
     }
 }
