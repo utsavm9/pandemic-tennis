@@ -55,7 +55,6 @@ Object.assign(
 
 // (Can define Main_Scene's class here)
 
-//const Main_Scene = Surfaces_Demo;
 const Main_Scene = Tennis;
 const Additional_Scenes = [];
 
