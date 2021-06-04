@@ -54,15 +54,23 @@ export class Table extends Scene {
                 texture: new Texture("assets/brick.jpg"),
             }),
             leg: new Material(new defs.Phong_Shader(), {
-                ambient: 0.25,
-                specularity: 0.25,
+                ambient: 0.4,
+                specularity: 0.5,
                 color: hex_color("#e5e5e5"),
                 smoothness: 1,
             }),
             net: new Material(new defs.Textured_Phong(), {
-                ambient: 1,
+                ambient: 0.5,
                 specularity: 1,
+                diffusivity: 1,
                 color: hex_color("#ffffff"),
+                texture: new Texture("assets/netstransparent.png"),
+            }),
+            net2: new Material(new defs.Textured_Phong(), {
+                ambient: 0.5,
+                specularity: 1,
+                diffusivity: 1,
+                color: hex_color("#FF0000"),
                 texture: new Texture("assets/netstransparent.png"),
             }),
         };
@@ -139,17 +147,30 @@ export class Table extends Scene {
             .times(Mat4.scale(0.4, 0.4, 10));
         this.cylinder.draw(context, program_state, right_leg, this.materials.leg);
         let right_back_leg = model_transform
-            .times(Mat4.translation(9, this.positions.table.y - 5, -17.5))
+            .times(Mat4.translation(9, this.positions.table.y - 5, -30.5))
             .times(Mat4.rotation(1.57, 1, 0, 0))
             .times(Mat4.scale(0.4, 0.4, 10));
         this.cylinder.draw(context, program_state, right_back_leg, this.materials.leg);
         let left_back_leg = model_transform
-            .times(Mat4.translation(-9, this.positions.table.y - 5, -17.5))
+            .times(Mat4.translation(-9, this.positions.table.y - 5, -30.5))
             .times(Mat4.rotation(1.57, 1, 0, 0))
             .times(Mat4.scale(0.4, 0.4, 10));
         this.cylinder.draw(context, program_state, left_back_leg, this.materials.leg);
 
+        
         let net = model_transform.times(Mat4.translation(0, -4, -17)).times(Mat4.scale(10, 1, 0.1));
         this.cube3.draw(context, program_state, net, this.materials.net);
+
+        let net2 = model_transform.times(Mat4.translation(-10, -2.5, -17))
+                                    .times(Mat4.rotation(1.57,0,1,0))
+                                    .times(Mat4.scale(15, 2, 0.05));
+        this.cube3.draw(context,program_state,net2,this.materials.net);
+
+        let net3 = model_transform.times(Mat4.translation(10, -2.5, -17))
+                                    .times(Mat4.rotation(1.57,0,1,0))
+                                    .times(Mat4.scale(15, 2, 0.05));
+        this.cube3.draw(context,program_state,net3,this.materials.net);
+
+
     }
 }

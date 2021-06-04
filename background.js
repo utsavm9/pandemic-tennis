@@ -174,7 +174,7 @@ export class Background extends Scene {
     add_ground(context,program_state)
     {
         let model_transform = Mat4.identity();
-        model_transform=Mat4.translation(0,-20,-15);
+        model_transform=Mat4.translation(0,-15,-15);
         model_transform=model_transform.times(Mat4.rotation(1.57,-1,0,0));
         model_transform=model_transform.times(Mat4.scale(40,40,0.1));
         this.shapes.box.draw(context, program_state, model_transform, this.materials.grass);
