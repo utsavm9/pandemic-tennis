@@ -29,7 +29,7 @@ export class Ball extends Scene {
         this.left = -10; // x-axis
         this.right = 10; // x-axis
 
-        this.time = 1; // seconds for the ball to hit the wall
+        this.time = 1.5; // seconds for the ball to hit the wall
 
         this.acceleration = {
             x: 0,
@@ -39,18 +39,22 @@ export class Ball extends Scene {
 
         this.velocity = {
             x: 3,
-            y: 10,
+            y: 20,
             z: 0,
         };
 
         this.position = {
             x: 0,
-            y: 0,
+            y: this.player,
             z: 0,
         };
 
         this.t = undefined;
         this.dt = 0;
+        this.missed = false;
+        this.gameOver = false;
+
+        this.paddleBounds = paddleBounds;
     }
 
     getRandom(min, max) {
@@ -70,26 +74,39 @@ export class Ball extends Scene {
     }
 
     playerHits() {
-        const wallPoint = this.getRandom(this.left, this.right);
-        const yDist = this.wall - this.position.y;
-        this.velocity.x = (wallPoint - this.position.x) / this.time;
-        this.velocity.y = yDist / this.time;
+        if (
+            this.paddleBounds.LEFT <= this.position.x &&
+            this.position.x <= this.paddleBounds.RIGHT &&
+            this.position.y >= this.paddleBounds.FRONT
+        ) {
+            const wallPoint = this.getRandom(this.left, this.right);
+            const yDist = this.wall - this.position.y;
+            this.velocity.x = (wallPoint - this.position.x) / this.time;
+            this.velocity.y = yDist / this.time;
+            this.velocity.z = 3;
+        } else {
+            this.missed = true;
+            setTimeout(() => {
+                this.gameOver = true;
+                console.log("Game over");
+            }, 1000);
+        }
     }
 
     bounce() {
-        if (this.position.z < this.table && this.velocity.z < 0) {
+        if (this.position.z < this.table && this.velocity.z <= 0) {
             this.velocity.z *= -1;
         }
-        if (this.position.y > this.wall && this.velocity.y > 0) {
+        if (this.position.y > this.wall && this.velocity.y >= 0) {
             this.velocity.y *= -1;
         }
-        if (this.position.y < this.player && this.velocity.y < 0) {
+        if (this.position.y < this.player && this.velocity.y <= 0) {
             this.playerHits();
         }
-        if (this.position.x < this.left && this.velocity.x < 0) {
+        if (this.position.x < this.left && this.velocity.x <= 0) {
             this.velocity.x *= -1;
         }
-        if (this.position.x > this.right && this.velocity.x > 0) {
+        if (this.position.x > this.right && this.velocity.x >= 0) {
             this.velocity.x *= -1;
         }
     }
@@ -109,8 +126,12 @@ export class Ball extends Scene {
         this.dt = t - this.t;
         assert(this.dt >= 0, { m: "ball: dt has become negative" });
 
-        this.move(this.dt);
-        this.bounce();
+        if (!this.gameOver) {
+            this.move(this.dt);
+            if (!this.missed) {
+                this.bounce();
+            }
+        }
 
         model_transform = model_transform
             .times(Mat4.translation(this.position.x, this.position.y, this.position.z))
