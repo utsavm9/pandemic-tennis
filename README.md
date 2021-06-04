@@ -26,7 +26,20 @@ Pandemic Tennis is 3D single-player table tennis. Because it is hard to draw a m
 ---
 
 **What we worked on**:
-* Dayuen: Background, textures, scene
+* Dayuen:
+* **Background**: 
+    * Utilized a Skybox where all the action is taken place inside
+    * Skybox is 4 side of a cube where a sky texture is applied
+    * Each side is drawn using seperate add functions.
+    * Skybox gives depth to the scene
+    * Used assignment 4 Texture_Scroll_X to give the effect of the clouds moving
+    * Added a secondary grass ground for depth 
+* **Textures**:
+    * Added textures for table, backboard, and net for visual effects.
+* **Scene**:
+    * Start scene begins upon startup
+    * Start scene end and game begins on click of start text
+    * Gameover scene begins when player misses the ball
 * Michael: 
   * **Paddle**: 
     * A flat cylinder for paddle’s blade, uniform red color
