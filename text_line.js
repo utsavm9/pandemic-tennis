@@ -19,7 +19,6 @@ const {
     Scene,
 } = tiny;
 
-
 export class Text_Line extends Shape {
     // **Text_Line** embeds text in the 3D world, using a crude texture
     // method.  This Shape is made of a horizontal arrangement of quads.
@@ -80,8 +79,7 @@ export class Text_Box extends Scene {
             cube: new defs.Cube(),
             text: new Text_Line(35),
         };
-        
-        
+
         // *** Materials
         this.materials = {
             sphere: new Material(new defs.Phong_Shader(), {
@@ -118,7 +116,7 @@ export class Text_Box extends Scene {
         });
     }
 
-    display(context, program_state, setting,score_num) {
+    display(context, program_state, setting, score_num) {
         // display():  Called once per frame of animation.
         // Setup -- This part sets up the scene's overall camera matrix, projection matrix, and lights:
 
@@ -152,7 +150,6 @@ export class Text_Box extends Scene {
         if (setting == 2) {
             funny_orbit = Mat4.identity();
             funny_orbit = funny_orbit.times(Mat4.translation(-11, 6, 1)).times(Mat4.rotation(-0.2, 1, 0, 0));
-            
         }
         if (setting == 3) {
             funny_orbit = Mat4.identity();
@@ -184,7 +181,6 @@ export class Text_Box extends Scene {
                     //cube_side.post_multiply(Mat4.scale(5,5, 5));
                 }
             }
-            
 
         // basically when collision is detected increase score_num then it should update
     }

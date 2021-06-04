@@ -10,9 +10,9 @@ function assert(condition, message) {
 }
 
 export class Ball extends Scene {
-    constructor(paddleBounds,tennis) {
+    constructor(paddleBounds, tennis) {
         super();
-        this.tennis=tennis;
+        this.tennis = tennis;
         this.sphere = new defs.Subdivision_Sphere(6);
         this.material = new Material(new defs.Phong_Shader(), {
             ambient: 0.9,
@@ -83,7 +83,12 @@ export class Ball extends Scene {
             const yDist = this.wall - this.position.y;
             this.velocity.x = (wallPoint - this.position.x) / this.time;
             this.velocity.y = yDist / this.time;
-            this.velocity.z = 3;
+
+            if (this.velocity.z < 0.75) {
+                this.velocity.z += 0.25;
+            }
+
+            this.velocity.z += 1;
 
             this.tennis.increase_score();
         } else {
