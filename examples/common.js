@@ -877,15 +877,15 @@ const Movement_Controls = defs.Movement_Controls =
                 //if (this.is_moving) {
                     e.preventDefault();
                     this.mouse.from_center = mouse_position(e);
-                    console.log("m from c: " + String(this.mouse.from_center));
-                    console.log("x: " + String(this.mouse.from_center[0]));
-                    console.log("y: " + String(this.mouse.from_center[1]));
+                    //console.log("m from c: " + String(this.mouse.from_center));
+                    //console.log("x: " + String(this.mouse.from_center[0]));
+                    //console.log("y: " + String(this.mouse.from_center[1]));
                     tennis.paddle.move(0.03*this.mouse.from_center[0], -0.03*this.mouse.from_center[1], 0);
                 //}
             });
-           // canvas.addEventListener("mouseout", e => {
-           //     if (!this.mouse.anchor) this.mouse.from_center.scale_by(0)
-           // });
+           canvas.addEventListener("mouseout", e => {
+               if (!this.mouse.anchor) this.mouse.from_center.scale_by(0)
+           });
         }
 
         show_explanation(document_element) {
@@ -1015,14 +1015,14 @@ const Movement_Controls = defs.Movement_Controls =
             }
 
             if (!this.mouse_enabled_canvases.has(context.canvas)) {
-                //this.add_mouse_controls(context.canvas);
-                //this.mouse_enabled_canvases.add(context.canvas)
+                this.add_mouse_controls(context.canvas);
+                this.mouse_enabled_canvases.add(context.canvas)
             }
             // Move in first-person.  Scale the normal camera aiming speed by dt for smoothness:
             this.first_person_flyaround(dt * r, dt * m);
             // Also apply third-person "arcball" camera mode if a mouse drag is occurring:
-            //if (this.mouse.anchor)
-                //this.third_person_arcball(dt * r);
+            if (this.mouse.anchor)
+                this.third_person_arcball(dt * r);
             // Log some values:
             this.pos = this.inverse().times(vec4(0, 0, 0, 1));
             this.z_axis = this.inverse().times(vec4(0, 0, 1, 0));
