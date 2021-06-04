@@ -118,45 +118,45 @@ export class Background extends Scene {
         let model_transform = Mat4.identity();
 
 
-        model_transform=Mat4.translation(0,0,-40.0);
+        model_transform=Mat4.translation(0,-10,-100.0);
         //model_transform=model_transform.times(Mat4.rotation(0.5,-1,0,0));
-        model_transform=model_transform.times(Mat4.scale(40,40,0.1));
+        model_transform=model_transform.times(Mat4.scale(80,80,0.1));
         this.shapes.box.draw(context, program_state, model_transform, this.materials.pz);
 
     }
     add_bottom(context,program_state)
     {
         let model_transform = Mat4.identity();
-        model_transform=Mat4.translation(0,-40,-15);
+        model_transform=Mat4.translation(0,-90,-30);
         model_transform=model_transform.times(Mat4.rotation(1.57,-1,0,0));
-        model_transform=model_transform.times(Mat4.scale(40,40,0.1));
+        model_transform=model_transform.times(Mat4.scale(80,80,0.1));
         this.shapes.box.draw(context, program_state, model_transform, this.materials.ny);
 
     }
     add_left(context,program_state)
     {
         let model_transform = Mat4.identity();
-        model_transform=Mat4.translation(-40.0,0,-15);
+        model_transform=Mat4.translation(-80.0,-10,-30);
         model_transform=model_transform.times(Mat4.rotation(1.57,0,1,0));
-        model_transform=model_transform.times(Mat4.scale(40,40,0.1));
+        model_transform=model_transform.times(Mat4.scale(80,80,0.1));
         this.shapes.box.draw(context, program_state, model_transform, this.materials.nx);
 
     }
     add_right(context,program_state)
     {
         let model_transform = Mat4.identity();
-        model_transform=Mat4.translation(40,0,-15);
+        model_transform=Mat4.translation(80,-10,-30);
         model_transform=model_transform.times(Mat4.rotation(1.57,0,-1,0));
-        model_transform=model_transform.times(Mat4.scale(40,40,0.1));
+        model_transform=model_transform.times(Mat4.scale(80,80,0.1));
         this.shapes.box.draw(context, program_state, model_transform, this.materials.px);
 
     }
     add_top(context,program_state)
     {
         let model_transform = Mat4.identity();
-        model_transform=Mat4.translation(0,40,-15);
+        model_transform=Mat4.translation(0,70,-30);
         model_transform=model_transform.times(Mat4.rotation(1.57,1,0,0));
-        model_transform=model_transform.times(Mat4.scale(40,40,0.1));
+        model_transform=model_transform.times(Mat4.scale(80,80,0.1));
         this.shapes.box.draw(context, program_state, model_transform, this.materials.py);
 
     }
@@ -165,9 +165,9 @@ export class Background extends Scene {
         let model_transform = Mat4.identity();
 
 
-        model_transform=Mat4.translation(0,0,21);
+        model_transform=Mat4.translation(0,-10,50);
         //model_transform=model_transform.times(Mat4.rotation(0.5,-1,0,0));
-        model_transform=model_transform.times(Mat4.scale(40,40,0.1));
+        model_transform=model_transform.times(Mat4.scale(80,80,0.1));
         this.shapes.box2.draw(context, program_state, model_transform, this.materials.pz);
 
     }
@@ -176,7 +176,7 @@ export class Background extends Scene {
         let model_transform = Mat4.identity();
         model_transform=Mat4.translation(0,-15,-15);
         model_transform=model_transform.times(Mat4.rotation(1.57,-1,0,0));
-        model_transform=model_transform.times(Mat4.scale(40,40,0.1));
+        model_transform=model_transform.times(Mat4.scale(80,80,0.1));
         this.shapes.box.draw(context, program_state, model_transform, this.materials.grass);
 
     }

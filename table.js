@@ -125,6 +125,7 @@ export class Table extends Scene {
         let table_transform = model_transform
             .times(Mat4.translation(this.positions.table.x, this.positions.table.y, this.positions.table.z))
             .times(Mat4.scale(this.TABLE_WIDTH, 0.5, this.TABLE_LENGTH));
+        ;
         this.cube.draw(context, program_state, table_transform, this.materials.table);
 
         let backboard_transform = model_transform
@@ -133,6 +134,16 @@ export class Table extends Scene {
             )
             .times(Mat4.scale(this.TABLE_WIDTH, 5, 0.3));
         this.cube2.draw(context, program_state, backboard_transform, this.materials.backboard);
+
+        let backboard_transform_2=model_transform
+            .times(
+                Mat4.translation(this.positions.backboard.x, this.positions.backboard.y-8, this.positions.backboard.z - 5)
+            )
+            .times(Mat4.scale(this.TABLE_WIDTH, 4, 0.3));
+        this.cube2.draw(context, program_state, backboard_transform_2, this.materials.backboard);
+
+
+        
 
         this.t = t;
 

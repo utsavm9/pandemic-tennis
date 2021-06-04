@@ -37,7 +37,7 @@ export class Tennis extends Scene {
             }),
         };
 
-        this.ball = new Ball(this.paddle.bounds);
+        this.ball = new Ball(this.paddle.bounds,this);
         this.ball.log();
 
         this.initial_camera_location = Mat4.look_at(vec3(0, 10, 20), vec3(0, 0, 0), vec3(0, 1, 0));
@@ -73,9 +73,9 @@ export class Tennis extends Scene {
             this.children.push((context.scratchpad.controls = movement_controls));
             // Define the global camera and projection matrices, which are stored in program_state.
             program_state.set_camera(this.initial_camera_location);
-            let camerap = Mat4.translation(0, 0, -40);
-            camerap = camerap.times(Mat4.rotation(0.1, -1, 0, 0));
-            //program_state.set_camera(camerap);
+            let camerap = Mat4.translation(0, 0, -300);
+            //camerap = camerap.times(Mat4.rotation(0.1, -1, 0, 0));
+             //program_state.set_camera(camerap);
         }
 
         program_state.projection_transform = Mat4.perspective(Math.PI / 4, context.width / context.height, 0.1, 1000);
@@ -88,8 +88,8 @@ export class Tennis extends Scene {
         const light_position = vec4(5, 0, 0, 10);
         program_state.lights = [new Light(light_position, color(1, 1, 1, 1), 10)];
 
-        this.swarm = 1;
-
+        
+        
         if (this.swarm != 1) {
             if (start == 1) {
                 this.background.displays(context, program_state, 1);
@@ -107,8 +107,8 @@ export class Tennis extends Scene {
             // Make z-upwards
             model_transform = model_transform.times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
             this.paddle.draw(context, program_state, model_transform);
-            this.axis.insert(model_transform.copy());
-            this.axis.display(context, program_state);
+            //this.axis.insert(model_transform.copy());
+            //this.axis.display(context, program_state);
             this.ball.draw(context, program_state, model_transform);
             model_transform = model_transform.times(Mat4.rotation(Math.PI / 2, 1, 0, 0));
             // Revert z
@@ -125,6 +125,8 @@ export class Tennis extends Scene {
             }
             
         }
+        
+        
        
     }
 }

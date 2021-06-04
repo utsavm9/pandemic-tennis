@@ -1,5 +1,5 @@
 import { tiny, defs } from "./examples/common.js";
-
+import { Tennis } from "./tennis.js";
 const { Vector, Vector3, vec, vec3, vec4, color, hex_color, Shader, Matrix, Mat4, Light, Shape, Material, Scene } =
     tiny;
 
@@ -10,9 +10,9 @@ function assert(condition, message) {
 }
 
 export class Ball extends Scene {
-    constructor(paddleBounds) {
+    constructor(paddleBounds,tennis) {
         super();
-
+        this.tennis=tennis;
         this.sphere = new defs.Subdivision_Sphere(6);
         this.material = new Material(new defs.Phong_Shader(), {
             ambient: 0.9,
@@ -84,11 +84,14 @@ export class Ball extends Scene {
             this.velocity.x = (wallPoint - this.position.x) / this.time;
             this.velocity.y = yDist / this.time;
             this.velocity.z = 3;
+
+            this.tennis.increase_score();
         } else {
             this.missed = true;
             setTimeout(() => {
                 this.gameOver = true;
                 console.log("Game over");
+                this.tennis.game_over();
             }, 1000);
         }
     }
