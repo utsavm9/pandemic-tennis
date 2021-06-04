@@ -21,7 +21,7 @@ Pandemic Tennis is 3D single-player table tennis. Because it is hard to draw a m
 
 **Advanced features**:
 * Collision detection: We utilize collision detection calculations to determine if the ball will bounce off of the paddle, backboard, and table.
-* Physics: The ball maintains a constant acceleration and changing velocity to simulate real bouncing.
+* Mouse picking: The paddle's position is updated via mouse picking, set up with a **mouse_move** event handler.
 
 ---
 
@@ -53,6 +53,8 @@ Pandemic Tennis is 3D single-player table tennis. Because it is hard to draw a m
     * Both are cuboids that are scaled appropriately
   * **Bounds**
     * The bounds property specifies the bounding box of each object to be used in collision detection calculations
+  * **Mouse Picking**
+    * Set up the mouse picking for paddle movement
 * Utsav: Ball, collision detection, physics
 
 **References**:
