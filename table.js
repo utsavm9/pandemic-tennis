@@ -102,7 +102,7 @@ export class Table extends Scene {
     }
 
     log() {
-        console.log(this.position.x);
+        //console.log(this.position.x);
     }
 
     draw(context, program_state, model_transform) {

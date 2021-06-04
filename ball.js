@@ -10,12 +10,12 @@ function assert(condition, message) {
 }
 
 export class Ball extends Scene {
-    constructor() {
+    constructor(paddleBounds) {
         super();
 
         this.sphere = new defs.Subdivision_Sphere(6);
         this.material = new Material(new defs.Phong_Shader(), {
-            ambient: 0.5,
+            ambient: 0.9,
             specularity: 0.5,
             color: color(1, 0.52, 0, 1),
         });
@@ -23,11 +23,11 @@ export class Ball extends Scene {
         // Ball related constants
         this.scale = 0.3;
 
-        this.table = -6; // z-axis
-        this.wall = 30; // y-axis
-        this.player = 0; // y-axis
-        this.left = -5; // x-axis
-        this.right = 5; // x-axis
+        this.table = -4.25; // z-axis
+        this.wall = 32; // y-axis
+        this.player = 0.5; // y-axis
+        this.left = -10; // x-axis
+        this.right = 10; // x-axis
 
         this.time = 1; // seconds for the ball to hit the wall
 
@@ -39,8 +39,8 @@ export class Ball extends Scene {
 
         this.velocity = {
             x: 3,
-            y: 20,
-            z: 1,
+            y: 10,
+            z: 0,
         };
 
         this.position = {
