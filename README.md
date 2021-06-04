@@ -27,7 +27,19 @@ Pandemic Tennis is 3D single-player table tennis. Because it is hard to draw a m
 
 **What we worked on**:
 * Dayuen: Background, textures, scene
-* Michael: Paddle, table + backboard, bounds
+* Michael: 
+  * **Paddle**: 
+    * A flat cylinder for paddle’s blade, uniform red color
+    * A long cylinder for paddle’s stick, wood texture
+    * Movable in the up-down/left-right plane
+    * The paddle gets moved by the paddle object’s **move()** function, which takes a set of Cartesian coordinates and updates the coordinates of the paddle
+    * The JavaScript object for paddle has a bounds property, with corresponding fields **UP, DOWN, LEFT, RIGHT,** and **FORWARD,** which will indicate the respective bounded plane of the paddle to be used for collision detection with the ball.
+  * **Table + Backboard**
+    * The table is a stationary field that the ball bounces on top of, with corresponding **UP, DOWN, LEFT, RIGHT,** and **FRONT** bounds properties 
+    * The backboard is a stationary field that the ball bounces off of, with corresponding **UP, DOWN, LEFT, RIGHT,** and **FRONT** bounds properties
+    * Both are cuboids that are scaled appropriately
+  * **Bounds**
+    * The bounds property specifies the bounding box of each object to be used in collision detection calculations
 * Utsav: Ball, collision detection, physics
 
 **References**:
