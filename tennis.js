@@ -25,10 +25,6 @@ export class Tennis extends Scene {
         };
 
         this.axis = new Axes_Viewer();
-
-        this.ball = new Ball();
-        this.ball.log();
-
         this.paddle = new Paddle();
         this.table = new Table();
         // *** Materials
@@ -40,6 +36,9 @@ export class Tennis extends Scene {
                 color: color(1, 1, 1, 1),
             }),
         };
+
+        this.ball = new Ball(this.paddle.bounds);
+        this.ball.log();
 
         this.initial_camera_location = Mat4.look_at(vec3(0, 10, 20), vec3(0, 0, 0), vec3(0, 1, 0));
     }
